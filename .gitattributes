@@ -1,0 +1,7 @@
+* text=auto eol=lf
+
+# 图片/音频按二进制处理
+*.mp3 binary
+*.png binary
+*.jpg binary
+*.ico binary

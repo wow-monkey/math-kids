@@ -1,0 +1,229 @@
+/* 全局样式：糖果色绘本风 */
+
+:root {
+  --sky: #aee7ff;
+  --sky-deep: #7fd4ff;
+  --grass: #7ed957;
+  --sun: #ffd93d;
+  --coral: #ff6b81;
+  --orange: #ff9f43;
+  --blue: #54a0ff;
+  --purple: #5f27cd;
+  --brown: #5b3a1e;
+  --cream: #fff8e7;
+  --white: #ffffff;
+  --font-fun: 'ZCOOL KuaiLe', 'Comic Sans MS', 'PingFang SC', sans-serif;
+  /* 数字专用字体：艺术中文字体的数字会被"方块化"（0 画成方框），认数字场景必须用标准字形 */
+  --font-num: 'Baloo 2', 'Nunito', 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+}
+
+/* 数字展示统一字体与等宽数字 */
+.num-font {
+  font-family: var(--font-num);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body,
+#app {
+  width: 100%;
+  height: 100%;
+  height: 100dvh;
+  overflow: hidden;
+  font-family: var(--font-fun);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  background: var(--sky);
+}
+
+button {
+  font-family: var(--font-fun);
+  border: none;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+/* 天空渐变背景 */
+.sky-bg {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, #7fd4ff 0%, #aee7ff 45%, #d8f5ff 75%, #c8f0a0 100%);
+}
+
+/* 通用大按钮 */
+.btn-big {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 18px 36px;
+  font-size: clamp(22px, 4vw, 32px);
+  color: var(--brown);
+  background: var(--sun);
+  border-radius: 999px;
+  border: 5px solid var(--white);
+  box-shadow: 0 8px 0 rgba(0, 0, 0, 0.15), 0 12px 24px rgba(0, 0, 0, 0.12);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.btn-big:active {
+  transform: translateY(6px) scale(0.98);
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.15);
+}
+.btn-big.coral { background: var(--coral); color: var(--white); }
+.btn-big.blue { background: var(--blue); color: var(--white); }
+.btn-big.green { background: var(--grass); color: var(--white); }
+
+/* 返回按钮 */
+.btn-back {
+  position: absolute;
+  top: max(16px, env(safe-area-inset-top));
+  left: max(16px, env(safe-area-inset-left));
+  z-index: 30;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--white);
+  border: 4px solid var(--sun);
+  font-size: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 5px 0 rgba(0, 0, 0, 0.12);
+  transition: transform 0.15s ease;
+}
+.btn-back:active {
+  transform: scale(0.9);
+}
+
+/* 顶部标题条 */
+.page-title {
+  position: absolute;
+  top: max(14px, env(safe-area-inset-top));
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  background: rgba(255, 255, 255, 0.9);
+  border: 4px solid var(--sun);
+  border-radius: 999px;
+  padding: 8px 28px;
+  font-size: clamp(20px, 3.5vw, 30px);
+  color: var(--brown);
+  white-space: nowrap;
+  box-shadow: 0 5px 0 rgba(0, 0, 0, 0.1);
+}
+
+/* 浮动动画 */
+@keyframes floaty {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+@keyframes wiggle {
+  0%, 100% { transform: rotate(-3deg); }
+  50% { transform: rotate(3deg); }
+}
+@keyframes pop-in {
+  0% { transform: scale(0); opacity: 0; }
+  70% { transform: scale(1.15); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+@keyframes bounce-in {
+  0% { transform: translateY(-60px) scale(0.6); opacity: 0; }
+  60% { transform: translateY(8px) scale(1.05); opacity: 1; }
+  100% { transform: translateY(0) scale(1); opacity: 1; }
+}
+.anim-pop { animation: pop-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+.anim-bounce { animation: bounce-in 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+.anim-float { animation: floaty 3s ease-in-out infinite; }
+.anim-wiggle { animation: wiggle 2s ease-in-out infinite; }
+
+/* 3D 画布容器 */
+.scene-container {
+  position: absolute;
+  inset: 0;
+}
+.scene-container canvas {
+  display: block;
+  touch-action: manipulation;
+}
+
+/* 遮罩弹窗 */
+.overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(60, 40, 10, 0.35);
+  backdrop-filter: blur(3px);
+}
+.overlay-card {
+  background: var(--cream);
+  border: 6px solid var(--sun);
+  border-radius: 36px;
+  padding: 36px 48px;
+  text-align: center;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25);
+  animation: pop-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  max-width: min(88vw, 560px);
+}
+
+/* 星星展示 */
+.stars-row {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  font-size: clamp(40px, 8vw, 64px);
+}
+.stars-row .star {
+  filter: grayscale(1) opacity(0.35);
+  transition: filter 0.3s;
+}
+.stars-row .star.on {
+  filter: none;
+  animation: pop-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+/* 隐藏滚动条但可滚动 */
+.scroll-area {
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+.scroll-area::-webkit-scrollbar {
+  display: none;
+}
+
+/* 竖屏提示 */
+.rotate-hint {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background: rgba(30, 60, 120, 0.92);
+  color: white;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  font-size: 26px;
+  text-align: center;
+  padding: 20px;
+}
+.rotate-hint .phone {
+  font-size: 72px;
+  animation: wiggle 1.6s ease-in-out infinite;
+}
+@media (orientation: portrait) and (max-width: 640px) {
+  .rotate-hint.show-on-portrait {
+    display: flex;
+  }
+}
