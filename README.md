@@ -49,14 +49,30 @@ src/
 
 ### Cloudflare Pages
 
-1. Cloudflare Dashboard → Workers & Pages → Create → Pages → Connect to Git，选择本仓库。
-2. 构建配置：
-   - Framework preset：`Vite`
-   - Build command：`npm run build`
-   - Build output directory：`dist`
-   - Node 版本：`20`（仓库已带 `.nvmrc`）
-3. 部署完成后通过 `https://<项目名>.pages.dev` 访问。hash 路由不需要额外的 SPA 回退规则。
-4. `public/_headers` 已配置：带 hash 的静态资源长缓存，`index.html` 每次校验。
+线上地址：<https://math-kids-4y4.pages.dev>
+
+更新发布（构建 + 上传，一条命令）：
+
+```bash
+npm run deploy
+```
+
+首次使用需先登录一次（凭据保存在本机，OAuth 授权）：
+
+```bash
+npx wrangler login
+```
+
+项目配置：
+
+- Framework preset：`Vite`
+- Build command：`npm run build`
+- Build output directory：`dist`
+- Node 版本：`20`（仓库已带 `.nvmrc`）
+
+当前项目通过 wrangler 直传部署（direct upload）。如果希望 push 后自动部署，可在 Cloudflare Dashboard 新建一个连接 Git 的 Pages 项目，构建配置与上表一致。
+
+`public/_headers` 已配置：带 hash 的静态资源长缓存，`index.html` 每次校验。
 
 ## 说明
 
