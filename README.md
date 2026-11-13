@@ -45,7 +45,18 @@ src/
 
 ## 部署
 
-`vite.config.js` 已设置 `base: './'`，使用 hash 路由，可直接部署到任意静态站点或 GitHub Pages 子路径。
+`vite.config.js` 已设置 `base: './'`，使用 hash 路由，可直接部署到任意静态站点或子路径。
+
+### Cloudflare Pages
+
+1. Cloudflare Dashboard → Workers & Pages → Create → Pages → Connect to Git，选择本仓库。
+2. 构建配置：
+   - Framework preset：`Vite`
+   - Build command：`npm run build`
+   - Build output directory：`dist`
+   - Node 版本：`20`（仓库已带 `.nvmrc`）
+3. 部署完成后通过 `https://<项目名>.pages.dev` 访问。hash 路由不需要额外的 SPA 回退规则。
+4. `public/_headers` 已配置：带 hash 的静态资源长缓存，`index.html` 每次校验。
 
 ## 说明
 
